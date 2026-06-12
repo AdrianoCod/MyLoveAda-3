@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Sempre Nós 🤍</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+html, body { height: 100%; margin: 0; overflow-x: hidden; }
+body { font-family: 'Montserrat', sans-serif; background: #0a0a0f; color: #f5f5f5; }
+.font-serif { font-family: 'Cormorant Garamond', serif; }
+#particles-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.section { position: relative; z-index: 1; }
+@keyframes float { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-10px) } }
+@keyframes pulse-glow { 0%,100%{ box-shadow: 0 0 20px rgba(212,175,55,0.3) } 50%{ box-shadow: 0 0 40px rgba(212,175,55,0.6) } }
+@keyframes fadeInUp { from { opacity:0; transform:translateY(30px) } to { opacity:1; transform:translateY(0) } }
+@keyframes heartbeat { 0%,100%{ transform:scale(1) } 50%{ transform:scale(1.15) } }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
+.animate-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s, transform 0.8s; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.gold { color: #d4af37; }
+.bg-gold { background: #d4af37; }
+.border-gold { border-color: #d4af37; }
+.glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(212,175,55,0.15); }
+.typing-cursor::after { content: '|'; animation: blink 1s infinite; color: #d4af37; }
+@keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:0 } }
+.quiz-btn { transition: all 0.3s; border: 1px solid rgba(212,175,55,0.3); }
+.quiz-btn:hover { background: rgba(212,175,55,0.1); border-color: #d4af37; }
+.reason-card { cursor: pointer; transition: all 0.4s; }
+.reason-card:hover { transform: scale(1.03); border-color: #d4af37; }
+.gallery-item { cursor: pointer; transition: transform 0.3s; }
+.gallery-item:hover { transform: scale(1.05); }
+#lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
+#lightbox.active { display: flex; }
+.screen { transition: opacity 1s, transform 1s; }
+.screen.hidden { opacity: 0; pointer-events: none; position: absolute; transform: scale(0.95); }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <canvas id="particles-canvas"></canvas><!-- SPLASH SCREEN -->
+  <div id="splash" class="section h-full flex flex-col items-center justify-center text-center px-6 screen">
+   <div class="animate-float mb-8"><span class="text-6xl md:text-8xl font-serif font-light gold" id="mainTitle">Para sempre nós 🤍</span>
+   </div>
+   <p class="text-lg md:text-xl text-gray-300 max-w-xl mb-12 font-light" id="subtitleText">Maria Eduarda, você transformou dias comuns em memórias que eu jamais vou esquecer.</p><button id="enterBtn" class="px-8 py-4 rounded-full border border-gold text-gold font-medium tracking-wider hover:bg-gold hover:text-black transition-all duration-500 animate-glow"> Entrar no nosso mundo </button>
+  </div><!-- MAIN CONTENT -->
+  <div id="main" class="section screen hidden" style="position:relative;">
+   <div class="max-w-4xl mx-auto px-4 py-16 space-y-32"><!-- COUNTER -->
+    <section class="text-center fade-in">
+     <h2 class="font-serif text-3xl md:text-4xl gold mb-8">Há quanto tempo você faz meus dias melhores</h2>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-2xl p-6">
+       <span id="days" class="text-4xl md:text-5xl font-serif gold">0</span>
+       <p class="text-sm text-gray-400 mt-2">Dias</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+       <span id="hours" class="text-4xl md:text-5xl font-serif gold">0</span>
+       <p class="text-sm text-gray-400 mt-2">Horas</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+       <span id="minutes" class="text-4xl md:text-5xl font-serif gold">0</span>
+       <p class="text-sm text-gray-400 mt-2">Minutos</p>
+      </div>
+      <div class="glass rounded-2xl p-6">
+       <span id="seconds" class="text-4xl md:text-5xl font-serif gold">0</span>
+       <p class="text-sm text-gray-400 mt-2">Segundos</p>
+      </div>
+     </div>
+    </section><!-- GALLERY -->
+    <section class="fade-in">
+     <h2 class="font-serif text-3xl md:text-4xl gold text-center mb-8">Nossos momentos favoritos</h2>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="0">
+       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      </div>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="1">
+       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      </div>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="2">
+       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      </div>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="3">
+       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      </div>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500 col-span-2 md:col-span-1" data-index="4">
+       <i data-lucide="video" class="w-12 h-12 opacity-30"></i>
+      </div>
+     </div>
+     <p class="text-center text-gray-500 text-sm mt-4">Adicione suas fotos e vídeo aqui</p>
+    </section><!-- LOVE LETTER -->
+    <section class="fade-in">
+     <h2 class="font-serif text-3xl md:text-4xl gold text-center mb-8">Carta de Amor</h2>
+     <div class="glass rounded-2xl p-8 md:p-12">
+      <div id="letter" class="font-serif text-lg md:text-xl leading-relaxed text-gray-200 whitespace-pre-wrap"></div><span id="letterCursor" class="typing-cursor"></span>
+     </div>
+    </section><!-- WHY I LOVE YOU -->
+    <section class="fade-in">
+     <h2 class="font-serif text-3xl md:text-4xl gold text-center mb-8">Por que eu te amo</h2>
+     <div id="reasonContainer" class="text-center">
+      <div class="reason-card glass rounded-2xl p-8 md:p-12 max-w-lg mx-auto">
+       <p id="reasonText" class="font-serif text-2xl text-gray-200">Toque para descobrir ❤️</p>
+      </div>
+      <p class="text-gray-500 text-sm mt-4" id="reasonCount">0/10</p>
+     </div>
+    </section><!-- QUIZ -->
+    <section class="fade-in">
+     <h2 class="font-serif text-3xl md:text-4xl gold text-center mb-8">Quiz do Casal</h2>
+     <div id="quizContainer" class="glass rounded-2xl p-8 max-w-lg mx-auto text-center">
+      <p id="quizQuestion" class="font-serif text-xl mb-6"></p>
+      <div id="quizOptions" class="space-y-3"></div>
+      <p id="quizAnswer" class="mt-6 font-serif text-lg gold hidden"></p>
+     </div>
+    </section><!-- FUTURE CAPSULE -->
+    <section class="fade-in">
+     <h2 class="font-serif text-3xl md:text-4xl gold text-center mb-8">Coisas que eu sonho viver com você</h2>
+     <div class="max-w-md mx-auto space-y-4" id="dreamsList">
+     </div>
+    </section><!-- FINAL MESSAGE -->
+    <section class="fade-in text-center py-20">
+     <div id="finalMsg" class="space-y-6 font-serif text-2xl md:text-3xl text-gray-200">
+     </div>
+    </section><!-- FOOTER -->
+    <footer class="text-center pb-12 fade-in">
+     <p class="text-gray-500 text-sm">Feito com amor por Fedooh para Ada</p>
+     <div class="mt-4 animate-heartbeat inline-block"><span class="text-4xl">🤍</span>
+     </div>
+    </footer>
+   </div>
+  </div><!-- LIGHTBOX -->
+  <div id="lightbox" onclick="this.classList.remove('active')"><span class="absolute top-4 right-4 text-white text-3xl cursor-pointer">×</span>
+   <p class="text-gray-400 text-lg">Adicione suas fotos aqui</p>
+  </div>
+  <script>
+// Config & SDK
+const defaultConfig = {
+  main_title: 'Para sempre nós 🤍',
+  partner_name: 'Maria Eduarda',
+  background_color: '#0a0a0f',
+  surface_color: '#1a1a2e',
+  text_color: '#f5f5f5',
+  primary_color: '#d4af37',
+  secondary_color: '#c0392b'
+};
+
+let config = { ...defaultConfig };
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (c) => {
+    config = c;
+    document.getElementById('mainTitle').textContent = c.main_title || defaultConfig.main_title;
+    const name = c.partner_name || defaultConfig.partner_name;
+    document.getElementById('subtitleText').textContent = `${name}, você transformou dias comuns em memórias que eu jamais vou esquecer.`;
+  },
+  mapToCapabilities: (c) => ({
+    recolorables: [
+      { get: () => c.background_color || defaultConfig.background_color, set: v => { c.background_color = v; window.elementSdk.setConfig({background_color:v}); }},
+      { get: () => c.surface_color || defaultConfig.surface_color, set: v => { c.surface_color = v; window.elementSdk.setConfig({surface_color:v}); }},
+      { get: () => c.text_color || defaultConfig.text_color, set: v => { c.text_color = v; window.elementSdk.setConfig({text_color:v}); }},
+      { get: () => c.primary_color || defaultConfig.primary_color, set: v => { c.primary_color = v; window.elementSdk.setConfig({primary_color:v}); }},
+      { get: () => c.secondary_color || defaultConfig.secondary_color, set: v => { c.secondary_color = v; window.elementSdk.setConfig({secondary_color:v}); }}
+    ],
+    borderables: [],
+    fontEditable: { get: () => c.font_family || 'Cormorant Garamond', set: v => { c.font_family = v; window.elementSdk.setConfig({font_family:v}); }},
+    fontSizeable: undefined
+  }),
+  mapToEditPanelValues: (c) => new Map([
+    ['main_title', c.main_title || defaultConfig.main_title],
+    ['partner_name', c.partner_name || defaultConfig.partner_name]
+  ])
+});
+
+// PARTICLES
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+for (let i = 0; i < 60; i++) {
+  particles.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2 + 0.5,
+    speedY: -(Math.random() * 0.3 + 0.1),
+    speedX: (Math.random() - 0.5) * 0.2,
+    opacity: Math.random() * 0.5 + 0.2,
+    isHeart: Math.random() < 0.1
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.y += p.speedY;
+    p.x += p.speedX;
+    if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+    ctx.globalAlpha = p.opacity;
+    if (p.isHeart) {
+      ctx.font = `${p.size * 6}px serif`;
+      ctx.fillText('♥', p.x, p.y);
+    } else {
+      ctx.fillStyle = '#d4af37';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ENTER BUTTON
+document.getElementById('enterBtn').addEventListener('click', () => {
+  document.getElementById('splash').classList.add('hidden');
+  setTimeout(() => {
+    document.getElementById('main').classList.remove('hidden');
+    document.getElementById('main').style.position = 'relative';
+    startCounter();
+    startLetter();
+    startFinalMessage();
+    initDreams();
+    observeFadeIns();
+  }, 500);
+});
+
+// COUNTER
+const startDate = new Date(2026, 4, 10, 12, 39, 0);
+function startCounter() {
+  function update() {
+    const now = new Date();
+    const diff = now - startDate;
+    const absDiff = Math.abs(diff);
+    const d = Math.floor(absDiff / 86400000);
+    const h = Math.floor((absDiff % 86400000) / 3600000);
+    const m = Math.floor((absDiff % 3600000) / 60000);
+    const s = Math.floor((absDiff % 60000) / 1000);
+    document.getElementById('days').textContent = d;
+    document.getElementById('hours').textContent = h;
+    document.getElementById('minutes').textContent = m;
+    document.getElementById('seconds').textContent = s;
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// LOVE LETTER
+const letterText = `Ada,
+
+Talvez eu nunca encontre palavras perfeitas para explicar tudo o que sinto por você.
+
+Desde aquele domingo, às 12h39, algo começou sem que eu imaginasse o quanto mudaria minha vida.
+
+Você chegou de uma forma leve, mas ocupou um espaço enorme dentro de mim.
+
+O que mais admiro em nós não são apenas os momentos felizes. É a forma como seguimos juntos, mesmo quando existem dúvidas, medos, saudades ou dificuldades.
+
+Você me ensinou que amar não é apenas sentir.
+
+É permanecer.
+
+É cuidar.
+
+É escolher a mesma pessoa todos os dias.
+
+Quando penso no futuro, não penso apenas em sonhos.
+
+Penso em nós.
+
+Penso nas nossas conversas.
+
+Nas nossas risadas.
+
+Nas preocupações que tenho quando você não está bem.
+
+Na paz que sinto quando sei que você está feliz.
+
+Você se tornou uma das pessoas mais importantes da minha vida.
+
+Minha melhor amiga.
+
+Minha parceira.
+
+Meu amor.
+
+Minha esperança.
+
+Minha paz.
+
+E se existe algo que eu quero continuar fazendo por muito tempo, é construir memórias ao seu lado.
+
+Não importa o caminho.
+
+Não importa o tempo.
+
+Não importa quantas dificuldades apareçam.
+
+Eu continuo escolhendo você.
+
+Hoje.
+
+Amanhã.
+
+E em todos os dias que Deus permitir.
+
+Porque mais importante do que qualquer sonho que eu tenha, é poder viver esse sonho ao seu lado.
+
+Com amor,
+
+Fedooh 🤍`;
+
+let letterIndex = 0;
+let letterStarted = false;
+function startLetter() {
+  const el = document.getElementById('letter');
+  const cursor = document.getElementById('letterCursor');
+  function type() {
+    if (letterIndex < letterText.length) {
+      el.textContent += letterText[letterIndex];
+      letterIndex++;
+      setTimeout(type, letterText[letterIndex-1] === '\n' ? 80 : 25);
+    } else {
+      cursor.style.display = 'none';
+    }
+  }
+  // Start when section is visible
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !letterStarted) {
+      letterStarted = true;
+      type();
+      observer.disconnect();
+    }
+  });
+  observer.observe(el.parentElement);
+}
+
+// REASONS
+const reasons = [
+  'Porque seu sorriso muda meu dia.',
+  'Porque você me traz paz.',
+  'Porque você acredita em mim.',
+  'Porque você me faz querer ser melhor.',
+  'Porque você é minha melhor amiga.',
+  'Porque eu amo conversar com você.',
+  'Porque você me faz sentir em casa.',
+  'Porque eu admiro quem você é.',
+  'Porque você me inspira.',
+  'Porque eu simplesmente amo você.'
+];
+let reasonIndex = 0;
+document.getElementById('reasonContainer').addEventListener('click', () => {
+  document.getElementById('reasonText').style.opacity = 0;
+  setTimeout(() => {
+    document.getElementById('reasonText').textContent = reasons[reasonIndex];
+    document.getElementById('reasonText').style.opacity = 1;
+    reasonIndex = (reasonIndex + 1) % reasons.length;
+    document.getElementById('reasonCount').textContent = `${reasonIndex}/${reasons.length}`;
+  }, 300);
+});
+document.getElementById('reasonText').style.transition = 'opacity 0.3s';
+
+// QUIZ
+const quizData = [
+  { q: 'Quem se apaixonou primeiro?', opts: ['Eu','Ela','Os dois ao mesmo tempo ❤️'], answer: 'Os dois ao mesmo tempo ❤️' },
+  { q: 'Quem sente mais saudade?', opts: ['Eu','Ela','Impossível medir 😂'], answer: 'Impossível medir 😂' },
+  { q: 'Quem é mais teimoso?', opts: ['Eu','Ela','Essa a gente deixa em aberto 😅'], answer: 'Essa a gente deixa em aberto 😅' },
+  { q: 'Quem ama mais?', opts: ['Eu','Ela','Amor não se mede.'], answer: 'Amor não se mede.' }
+];
+let quizIndex = 0;
+function showQuiz() {
+  if (quizIndex >= quizData.length) {
+    document.getElementById('quizContainer').innerHTML = '<p class="font-serif text-2xl gold">Resultado final: Vocês são oficialmente almas parceiras 🤍</p>';
+    return;
+  }
+  const q = quizData[quizIndex];
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizAnswer').classList.add('hidden');
+  const optEl = document.getElementById('quizOptions');
+  optEl.innerHTML = '';
+  q.opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-btn w-full py-3 px-4 rounded-xl text-gray-200';
+    btn.textContent = o;
+    btn.onclick = () => {
+      document.getElementById('quizAnswer').textContent = q.answer;
+      document.getElementById('quizAnswer').classList.remove('hidden');
+      setTimeout(() => { quizIndex++; showQuiz(); }, 2000);
+    };
+    optEl.appendChild(btn);
+  });
+}
+showQuiz();
+
+// DREAMS
+function initDreams() {
+  const dreams = ['Mais viagens juntos.','Mais fotos.','Mais risadas.','Mais conquistas.','Mais domingos.','Mais aniversários.','Mais abraços.','Mais nós.'];
+  const container = document.getElementById('dreamsList');
+  dreams.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'glass rounded-xl p-4 text-center font-serif text-lg text-gray-200 fade-in';
+    div.style.animationDelay = `${i * 0.15}s`;
+    div.textContent = d;
+    container.appendChild(div);
+  });
+}
+
+// FINAL MESSAGE
+function startFinalMessage() {
+  const msgs = [
+    'Se eu pudesse voltar para aquele domingo, às 12h39…',
+    '…eu começaria tudo de novo.',
+    'E escolheria você outra vez.',
+    'E outra.',
+    'E outra.',
+    'Porque o meu lugar favorito continua sendo ao seu lado.',
+    '🤍',
+    'Para sempre nós 🤍'
+  ];
+  const container = document.getElementById('finalMsg');
+  msgs.forEach((m, i) => {
+    const p = document.createElement('p');
+    p.className = 'opacity-0 transition-opacity duration-1000';
+    p.textContent = m;
+    if (m === '🤍') p.className += ' text-5xl animate-heartbeat';
+    container.appendChild(p);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      const ps = container.querySelectorAll('p');
+      ps.forEach((p, i) => setTimeout(() => p.style.opacity = 1, i * 1500));
+      observer.disconnect();
+    }
+  });
+  observer.observe(container);
+}
+
+// FADE IN OBSERVER
+function observeFadeIns() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+}
+
+// GALLERY LIGHTBOX
+document.querySelectorAll('.gallery-item').forEach(item => {
+  item.addEventListener('click', () => document.getElementById('lightbox').classList.add('active'));
+});
+
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0a4f0a666f5f1d9',t:'MTc4MTIyNjI1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
