@@ -40,36 +40,35 @@ body { font-family: 'Montserrat', sans-serif; background: #0a0a0f; color: #f5f5f
 #lightbox.active { display: flex; }
 .screen { transition: opacity 1s, transform 1s; }
 .screen.hidden { opacity: 0; pointer-events: none; position: absolute; transform: scale(0.95); }
+#main { opacity: 0; transition: opacity 0.6s ease-in-out; }
 </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full">
+ <body class="bg-black">
   <canvas id="particles-canvas"></canvas><!-- SPLASH SCREEN -->
-  <div id="splash" class="section h-full flex flex-col items-center justify-center text-center px-6 screen">
-   <div class="animate-float mb-8"><span class="text-6xl md:text-8xl font-serif font-light gold" id="mainTitle">Para sempre nós 🤍</span>
+  <div id="splash" class="fixed inset-0 section flex flex-col items-center justify-center text-center px-6 z-50 bg-black">
+   <div class="animate-float mb-8">
+    <span class="text-6xl md:text-8xl font-serif font-light gold" id="mainTitle">Para sempre nós 🤍</span>
    </div>
    <p class="text-lg md:text-xl text-gray-300 max-w-xl mb-12 font-light" id="subtitleText">Maria Eduarda, você transformou dias comuns em memórias que eu jamais vou esquecer.</p><button id="enterBtn" class="px-8 py-4 rounded-full border border-gold text-gold font-medium tracking-wider hover:bg-gold hover:text-black transition-all duration-500 animate-glow"> Entrar no nosso mundo </button>
   </div><!-- MAIN CONTENT -->
-  <div id="main" class="section screen hidden" style="position:relative;">
-   <div class="max-w-4xl mx-auto px-4 py-16 space-y-32"><!-- COUNTER -->
+  <div id="main" class="w-full bg-black py-16 relative z-10" style="display:none;">
+   <div class="max-w-4xl mx-auto px-4 space-y-32">
+    <!-- COUNTER -->
     <section class="text-center fade-in">
      <h2 class="font-serif text-3xl md:text-4xl gold mb-8">Há quanto tempo você faz meus dias melhores</h2>
      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="glass rounded-2xl p-6">
-       <span id="days" class="text-4xl md:text-5xl font-serif gold">0</span>
+      <div class="glass rounded-2xl p-6"><span id="days" class="text-4xl md:text-5xl font-serif gold">0</span>
        <p class="text-sm text-gray-400 mt-2">Dias</p>
       </div>
-      <div class="glass rounded-2xl p-6">
-       <span id="hours" class="text-4xl md:text-5xl font-serif gold">0</span>
+      <div class="glass rounded-2xl p-6"><span id="hours" class="text-4xl md:text-5xl font-serif gold">0</span>
        <p class="text-sm text-gray-400 mt-2">Horas</p>
       </div>
-      <div class="glass rounded-2xl p-6">
-       <span id="minutes" class="text-4xl md:text-5xl font-serif gold">0</span>
+      <div class="glass rounded-2xl p-6"><span id="minutes" class="text-4xl md:text-5xl font-serif gold">0</span>
        <p class="text-sm text-gray-400 mt-2">Minutos</p>
       </div>
-      <div class="glass rounded-2xl p-6">
-       <span id="seconds" class="text-4xl md:text-5xl font-serif gold">0</span>
+      <div class="glass rounded-2xl p-6"><span id="seconds" class="text-4xl md:text-5xl font-serif gold">0</span>
        <p class="text-sm text-gray-400 mt-2">Segundos</p>
       </div>
      </div>
@@ -77,20 +76,15 @@ body { font-family: 'Montserrat', sans-serif; background: #0a0a0f; color: #f5f5f
     <section class="fade-in">
      <h2 class="font-serif text-3xl md:text-4xl gold text-center mb-8">Nossos momentos favoritos</h2>
      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="0">
-       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="0"><i data-lucide="image" class="w-12 h-12 opacity-30"></i>
       </div>
-      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="1">
-       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="1"><i data-lucide="image" class="w-12 h-12 opacity-30"></i>
       </div>
-      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="2">
-       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="2"><i data-lucide="image" class="w-12 h-12 opacity-30"></i>
       </div>
-      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="3">
-       <i data-lucide="image" class="w-12 h-12 opacity-30"></i>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500" data-index="3"><i data-lucide="image" class="w-12 h-12 opacity-30"></i>
       </div>
-      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500 col-span-2 md:col-span-1" data-index="4">
-       <i data-lucide="video" class="w-12 h-12 opacity-30"></i>
+      <div class="gallery-item glass rounded-xl aspect-square flex items-center justify-center text-gray-500 col-span-2 md:col-span-1" data-index="4"><i data-lucide="video" class="w-12 h-12 opacity-30"></i>
       </div>
      </div>
      <p class="text-center text-gray-500 text-sm mt-4">Adicione suas fotos e vídeo aqui</p>
@@ -129,12 +123,14 @@ body { font-family: 'Montserrat', sans-serif; background: #0a0a0f; color: #f5f5f
     </section><!-- FOOTER -->
     <footer class="text-center pb-12 fade-in">
      <p class="text-gray-500 text-sm">Feito com amor por Fedooh para Ada</p>
-     <div class="mt-4 animate-heartbeat inline-block"><span class="text-4xl">🤍</span>
+     <div class="mt-4 animate-heartbeat inline-block">
+      <span class="text-4xl">🤍</span>
      </div>
     </footer>
    </div>
   </div><!-- LIGHTBOX -->
-  <div id="lightbox" onclick="this.classList.remove('active')"><span class="absolute top-4 right-4 text-white text-3xl cursor-pointer">×</span>
+  <div id="lightbox" onclick="this.classList.remove('active')">
+   <span class="absolute top-4 right-4 text-white text-3xl cursor-pointer">×</span>
    <p class="text-gray-400 text-lg">Adicione suas fotos aqui</p>
   </div>
   <script>
@@ -222,16 +218,25 @@ drawParticles();
 
 // ENTER BUTTON
 document.getElementById('enterBtn').addEventListener('click', () => {
-  document.getElementById('splash').classList.add('hidden');
+  const splash = document.getElementById('splash');
+  const main = document.getElementById('main');
+  
+  splash.style.opacity = '0';
+  splash.style.pointerEvents = 'none';
+  
+  main.style.display = 'block';
+  main.style.opacity = '1';
+  
+  document.body.style.overflow = 'auto';
+  window.scrollTo(0, 0);
+  
   setTimeout(() => {
-    document.getElementById('main').classList.remove('hidden');
-    document.getElementById('main').style.position = 'relative';
     startCounter();
     startLetter();
     startFinalMessage();
     initDreams();
     observeFadeIns();
-  }, 500);
+  }, 300);
 });
 
 // COUNTER
@@ -459,5 +464,5 @@ document.querySelectorAll('.gallery-item').forEach(item => {
 
 lucide.createIcons();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0a4f0a666f5f1d9',t:'MTc4MTIyNjI1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0a4fb1aa25bef26',t:'MTc4MTIyNjY3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
